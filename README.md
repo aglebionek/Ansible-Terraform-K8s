@@ -1,0 +1,1 @@
+This is a github repository created for all the code and notes created for Udemy course: [DevOps MasterClass: Terraform Kubernetes Ansible Docker](https://www.udemy.com/course/devops-training/).

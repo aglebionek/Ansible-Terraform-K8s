@@ -1,0 +1,1 @@
+Terraform is a platform-agnostic IaC tool.
