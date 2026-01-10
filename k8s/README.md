@@ -56,3 +56,20 @@ There are other ways to interact with the docker inside a node. For example:
 
 Using kubectl to interact with the containers is also possible. For example:
 - ```kubectl exec -it <container_name> sh``` - opens a shell inside the container, same as docker exec.
+
+### Namespaces
+- Virtual cluster
+- Workspace
+- A way to separate and organize Objects
+
+- ```kubectl get namespaces``` - lists all namespaces
+By default the namespace is named 'default'
+
+- ```kubectl create namespace <namespace_name>``` - creates a new namespace
+
+- ```kubectl get <resource>``` - lists resources in the default namespace
+
+- ```kubectl get <resource> --namespace <namespace_name>``` - lists resources in the specified namespace
+
+If you're unsure where a resource is located, you can use:
+- ```kubectl get <resource> --all-namespaces``` - lists resources in all namespaces
