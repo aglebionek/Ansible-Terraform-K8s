@@ -11,7 +11,8 @@ https://kubernetes.io/docs/concepts/architecture/
 - Can have one or multiple master nodes, one or multiple slave (worker) nodes.
 
 
-## MASTER NODE
+
+## MASTER NODE / CONTROL PLANE
 <img src="images/master_node_diagram.png" alt="master_node_diagram" width="600"/>
 
 - Manages the worker nodes and the pods in the cluster
@@ -31,6 +32,7 @@ https://kubernetes.io/docs/concepts/architecture/
 
 ### Control manager
 - Runs all automated jobs within the cluster
+
 
 
 ## WORKER NODE
@@ -54,11 +56,13 @@ https://kubernetes.io/docs/concepts/architecture/
 - Single IP per pod, not per container
 
 
+
 ## TWO WAYS TO INSTALL
-### High Availability Deployment
-- One master node, two worker nodes
-- Production suitable
-    
 ### Minikube
 - One node
 - Suitable for development/testing
+
+### High Availability Deployment
+- One master node, two worker nodes
+- Production suitable
+- Can run multiple deployments with a load balancer in front of them. The load balancer distributes the traffic between the deployments, both external and internal.
