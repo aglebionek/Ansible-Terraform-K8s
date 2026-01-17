@@ -6,11 +6,14 @@
 - ```kubectl delete <resource> <resource name>``` - deletes a specific resource
 
 ### Status commands
-- ```minikube status``` - shows the status of the minikube
-- ```minikube dashboard``` - opens the kubernetes dashboard in the browser (for WSL2, provides a link to the dashboard)
-- ```kubectl get <resource>``` - lists all the resources, e.g. deployments, pods, services
-- ```kubectl describe <resource> <resource name>``` - shows more information about the resource
-- ```kubectl logs <pod name>``` - shows the logs of the pod
+1. ```kubectl get <resource> <resource name> -o <output> --selector <label selector> --sort-by <JSONpath>``` - lists all the resources, e.g. deployments, pods, services
+    - ```-o``` - output format, e.g. yaml, json, wide
+    - ```--selector``` - filter by label selector, e.g. app=client
+    - ```--sort-by``` - sort by a specific field, e.g. .status.containerStatuses[0].restartCount
+2. ```kubectl describe <resource> <resource name>``` - shows more information about the resource
+3. ```minikube status``` - shows the status of the minikube
+4. ```minikube dashboard``` - opens the kubernetes dashboard in the browser (for WSL2, provides a link to the dashboard)
+5. ```kubectl logs <pod name>``` - shows the logs of the pod
 
 ### Accessing the pod in the browser with WSL2
 "The network is limited if using the Docker driver on Darwin, Windows, or WSL, and the Node IP is not reachable directly." [source](https://minikube.sigs.k8s.io/docs/handbook/accessing/)
@@ -36,7 +39,7 @@ Use actual version tags instead of :latest, and either
 - Use a command to update the image in the resource file, like the following:
 ```kubectl set image <resource_type>/<resource_name> <container_name>=<new_image>```
 
-Sources for the variable names:
+### Sources for the variable names
 - <resource_type> - kind in the resource file, e.g. deployment
 - <resource_name> - metadata.name in the resource file, e.g. client-deployment
 - <container_name> - containers.name in the resource file, e.g. client
