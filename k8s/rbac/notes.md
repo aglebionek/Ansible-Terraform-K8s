@@ -89,3 +89,9 @@ and verify under users that the new user has been added.
 kubectl config set-context username-context --cluster=clustername --namespace=default --user=username
 ```
 You might want to create a new namespace for the user instead of using the default one.
+
+
+
+## Service accounts
+- A special type of account used by containers running in pods to interact with the Kubernetes API.
+- We can create service accounts and assign them Roles or ClusterRoles using RoleBindings or ClusterRoleBindings.
