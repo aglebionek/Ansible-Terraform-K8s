@@ -58,7 +58,7 @@ There are other ways to interact with the docker inside a node. For example:
 - ```docker exec -it <node_name> sh``` - opens a shell inside the container. We can run docker commands from there. (in my case the node_name is `minikube`)
 
 Using kubectl to interact with the containers is also possible. For example:
-- ```kubectl exec -it <container_name> sh``` - opens a shell inside the container, same as docker exec.
+- ```kubectl exec -it <container_name> -- sh``` - opens a shell inside the container, same as docker exec.
 
 ### Namespaces
 - Virtual cluster
