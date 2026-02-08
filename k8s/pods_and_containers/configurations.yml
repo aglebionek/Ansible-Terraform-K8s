@@ -1,0 +1,97 @@
+# You can use 'kubectl describe <kind> <name>' to see the configs details.
+
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: player-config
+data:
+  # Key-value pairs for player configuration
+  player_lives: "5"
+  properties_file_name: "ui.properties"
+
+  # Nested key-value pairs
+  base.properties: |
+    enemy.types=zombie,alien,robot
+    player.max_lives=10
+  ui.properties: |
+    color.good=purple
+    color.bad=yellow
+    allow.textmode=true
+
+---
+
+# You can remove this config from file after creating the secret, as it contains sensitive information. You can also setup correct permissions for the file/secret object modification/access.
+apiVersion: v1
+kind: Secret
+metadata:
+  name: example-secret
+type: Opaque
+# base64 encoded values, can use `echo -n 'value' | base64` to encode 
+data:
+  username: YWRtaW4=
+  password: YWRtaW5wYXNzd29yZA==
+
+---
+
+# Inside the container, you can run echo $<NAME>, e.g. echo $PLAYER_LIVES, or printenv to see all env variables.
+apiVersion: v1
+kind: Pod
+metadata:
+  name: config-pod-demo
+spec:
+  containers:
+    - name: config-demo
+      image: alpine
+      command: ["sleep", "3600"]
+      env:
+        # Define the environment variable
+        - name: PLAYER_LIVES
+          valueFrom:
+            configMapKeyRef:
+              name: player-config  # The object this value comes from.
+              key: player_lives # The key to fetch.
+        - name: PROPERTIES_FILE_NAME
+          valueFrom:
+            configMapKeyRef:
+              name: player-config
+              key: properties_file_name
+        - name: SECRET_USERNAME
+          valueFrom:
+            secretKeyRef:
+              name: example-secret
+              key: username
+        - name: SECRET_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: example-secret
+              key: password
+
+---
+
+# If something went wrong with creating the volumes, you can check that with kubectl describe.
+# The volume is mounted inside the container. You can run kubectl exec, cd into the mounted path and run ls/cat to see the contents of the volume.
+apiVersion: v1
+kind: Pod
+metadata:
+  name: vol-config-pod-demo
+spec:
+  containers:
+    - name: vol-config-demo
+      image: alpine
+      command: ["sleep", "3600"]
+      volumeMounts:
+      - name: player-map
+        mountPath: /etc/config/configMap
+      - name: player-secret
+        mountPath: /etc/config/secret
+  volumes:
+    # We set volumes at the Pod level, then mount them into containers inside that Pod
+    - name: player-map
+      configMap:
+        # Provide the name of the ConfigMap you want to mount.
+        name: player-config
+    - name: player-secret
+      secret:
+        secretName: example-secret
+
