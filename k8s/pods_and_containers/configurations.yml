@@ -19,6 +19,31 @@ data:
     color.bad=yellow
     allow.textmode=true
 
+  # The configMap can be anything, for example an nginx.conf file. 
+  # We could then mount this configMap as a volume and use it as the nginx configuration file.
+  # Example mounting of this configMap as a volume:
+  # volumes:
+  # - name: nginx-config-volume # define the name of the created volume
+  #   configMap:
+  #     name: nginx-config # specify the name of the configMap to use as the source of the volume
+  # volumeMounts:
+  # - name: nginx-config-volume # specify the name of the volume to mount
+  #   mountPath: /etc/nginx # specify the path inside the container where the volume should be mounted
+  nginx.conf: |
+    events {
+      worker_connections  1024;
+    }
+    http {
+      server {
+        listen 80;
+        location / {
+          root /usr/share/nginx/html;
+          index index.html index.htm;
+        }
+      }
+    }
+    ...
+
 ---
 
 # Config map with flat key-value pairs
