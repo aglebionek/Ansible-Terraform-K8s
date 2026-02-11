@@ -1,6 +1,6 @@
 # You can use 'kubectl describe <kind> <name>' to see the configs details.
 
-
+# Config map with nested key-value pairs
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -18,6 +18,19 @@ data:
     color.good=purple
     color.bad=yellow
     allow.textmode=true
+
+---
+
+# Config map with flat key-value pairs
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: player-config-flat
+data:
+  # Key-value pairs for player configuration
+  KEY1: value1
+  KEY2: value2
+  KEY3: value3
 
 ---
 
@@ -44,6 +57,7 @@ spec:
     - name: config-demo
       image: alpine
       command: ["sleep", "3600"]
+      # Defining keys from ConfigMap and Secret as environment variables in the container
       env:
         # Define the environment variable
         - name: PLAYER_LIVES
@@ -66,6 +80,12 @@ spec:
             secretKeyRef:
               name: example-secret
               key: password
+      # Directly adding the entire flat configMap/secret as environment variables
+      envFrom:
+        - configMapRef:
+            name: player-config-flat
+        - secretRef:
+            name: example-secret
 
 ---
 
