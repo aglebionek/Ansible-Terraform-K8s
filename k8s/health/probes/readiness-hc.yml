@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: hc-probe
+spec:
+  containers:
+    - name: nginx
+      image: k8s.gcr.io/nginx
+      livenessProbe:
+        httpGet:
+          path: /
+          port: 80
+        initialDelaySeconds: 3
+        periodSeconds: 3
+      readinessProbe:
+        httpGet:
+          path: /
+          port: 80
+          # port: 9000 - if you change the port to 9000, the readiness probe will fail and the pod will not be ready, and will not receive traffic from the service.
+        initialDelaySeconds: 3
+        periodSeconds: 3
