@@ -15,19 +15,28 @@
 4. ```minikube dashboard``` - opens the kubernetes dashboard in the browser (for WSL2, provides a link to the dashboard)
 5. ```kubectl logs <pod name>``` - shows the logs of the pod
 
-### Accessing the pod in the browser with WSL2
+### Accessing workloads from outside the cluster
+Pod IPs shown by `kubectl get pods -o wide` are usually only reachable from inside the cluster. To access a pod or service from your machine, use one of the options below.
+
+### Accessing a pod or service with port-forward
+- ```kubectl port-forward pod/<pod name> <local port>:<container port>``` - forwards a local port to a pod port, useful for quick testing without creating a Service
+- ```kubectl port-forward service/<service name> <local port>:<service port>``` - forwards a local port to a Service
+- Example: ```kubectl port-forward pod/two-containers 8080:80``` and then open ```http://localhost:8080```
+
+### Accessing a service in the browser with WSL2
 "The network is limited if using the Docker driver on Darwin, Windows, or WSL, and the Node IP is not reachable directly." [source](https://minikube.sigs.k8s.io/docs/handbook/accessing/)
-Because of that, minikube can create a tunnel for us to access the pod in the browser. To do that, we need to run the following command:
-- ```minikube service client-node-port --url``` - shows the url to access the pod in the browser. Note from the command output: "Because you are using a Docker driver on linux, the terminal needs to be open to run it." The terminal hangs.
+Because of that, minikube can create a tunnel for us to access a service in the browser. To do that, we need to run the following command:
+- ```minikube service <service name> --url``` - shows the url to access the service in the browser. Note from the command output: "Because you are using a Docker driver on linux, the terminal needs to be open to run it." The terminal hangs.
 - Running ```minikube service client-node-port url``` doesn't hang the terminal, but it automatically tries to open a browser with the tunnel url.
 - Running ```minikube service --all``` has the same effect as the previous command.
 - Dashboard URL ```minikube dashboard --url```
 
-### Accessing the pod without a tunnel
+### Accessing a service without a tunnel
 - ```minikube ip``` - shows the minikube ip
-- Access the pod in the browser with the following url: ```http://<minikube ip>:<nodePort>```
+- Access the service in the browser with the following url: ```http://<minikube ip>:<nodePort>```
 - Docker Desktop should work with a localhost url, so ```http://localhost:<nodePort>```
-- Run ```kubectl expose deployment <deployment name> --type=LoadBalancer --port=<container port>``` - exposes the deployment with a LoadBalancer service type. This creates a service that can be accessed from outside the cluster.
+- Run ```kubectl expose deployment <deployment name> --type=NodePort --port=<service port>``` - exposes the deployment with a NodePort service type. This creates a service that can be accessed from outside the cluster through the minikube IP and nodePort.
+- Run ```kubectl expose deployment <deployment name> --type=LoadBalancer --port=<service port>``` - exposes the deployment with a LoadBalancer service type. In minikube, this is commonly paired with ```minikube service <service name> --url```.
 
 ### Updating a resource to use the actual :latest image
 - [Kubernetes github issue reference](https://github.com/kubernetes/kubernetes/issues/33664)
