@@ -33,6 +33,10 @@ https://kubernetes.io/docs/concepts/architecture/
 ### Control manager
 - Runs all automated jobs within the cluster
 
+### Additional notes
+Actually, the control plane is also a node, but not a worker node. You can verify that by running `kubectl get nodes`.
+A node is a virtual or physical machine. You can for example ssh into it. Running `minikube ssh` actually sshs into the control plane node.
+Running `docker ps` on the control plane shows all containers running on the control plane, like api server, scheduler, etcd, control manager etc.
 
 
 ## WORKER NODE
