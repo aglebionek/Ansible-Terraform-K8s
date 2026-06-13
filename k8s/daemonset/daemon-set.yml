@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: logging
+spec:
+  selector:
+    matchLabels: # The labels must match
+      app: httpd-logging
+  template:
+    # here we are defining pod specification
+    metadata:
+      labels: # The labels must match
+        app: httpd-logging
+    spec:
+      containers:
+        - name: webserver
+          image: httpd
+          ports:
+            - containerPort: 80
