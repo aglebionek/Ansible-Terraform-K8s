@@ -49,7 +49,8 @@ Running `docker ps` on the control plane shows all containers running on the con
 
 ### KUBELET
 - K8s agent running on the worker node
-- Reads the Pod config from the api server and ensures that described containers are running
+- Takes a set of PodSpecs that are provided through various mechanisms and ensures that the containers described in those PodSpecs are running and healthy.
+- Only manages containers which were created by Kubernetes.
 
 ### Kube-proxy
 - Manages subnetting
