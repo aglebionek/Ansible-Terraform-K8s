@@ -1,6 +1,7 @@
 ### Starting the minikube and managing resources
 - ```minikube start``` - starts the minikube cluster
 - ```kubectl create deployment <deployment name> --image=<image name>``` - creates a deployment with the specified image
+- ```kubectl run <resource name> --image=<image name>``` - create a resource with the specified image
 - ```kubectl apply -f .``` - applies all configurations in the current directory
 - ```kubectl delete -f .``` - deletes all the configurations in the current directory
 - ```kubectl delete <resource> <resource name>``` - deletes a specific resource
