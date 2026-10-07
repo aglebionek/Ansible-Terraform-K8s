@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: myapp-rs
+spec:
+  template:
+    # This is basically a pod specification, but it is nested inside the replication controller spec
+    metadata:
+      name: myapp-pod
+      labels:
+        type: frontend
+    spec:
+      containers:
+        - name: nginx-container
+          image: nginx
+  replicas: 3
+  # the selector is needed because a replicaset can manage pods that were created by other means, e.g. a deployment. 
+  # The selector is used to determine which pods belong to this replicaset.
+  selector:
+    matchLabels:
+      app: myapp

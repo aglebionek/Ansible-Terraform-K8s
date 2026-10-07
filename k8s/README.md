@@ -12,10 +12,11 @@
     - ```-o``` - output format, e.g. yaml, json, wide
     - ```--selector``` - filter by label selector, e.g. app=client
     - ```--sort-by``` - sort by a specific field, e.g. .status.containerStatuses[0].restartCount
-2. ```kubectl describe <resource> <resource name>``` - shows more information about the resource
-3. ```minikube status``` - shows the status of the minikube
-4. ```minikube dashboard``` - opens the kubernetes dashboard in the browser (for WSL2, provides a link to the dashboard)
-5. ```kubectl logs <pod name>``` - shows the logs of the pod
+2. ```kubectl get all``` - lists all resources in the current namespace
+3. ```kubectl describe <resource> <resource name>``` - shows more information about the resource
+4. ```minikube status``` - shows the status of the minikube
+5. ```minikube dashboard``` - opens the kubernetes dashboard in the browser (for WSL2, provides a link to the dashboard)
+6. ```kubectl logs <pod name>``` - shows the logs of the pod
 
 ### Accessing workloads from outside the cluster
 Pod IPs shown by `kubectl get pods -o wide` are usually only reachable from inside the cluster. To access a pod or service from your machine, use one of the options below.
