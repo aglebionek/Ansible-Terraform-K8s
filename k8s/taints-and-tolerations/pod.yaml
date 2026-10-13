@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: my-pod
+  labels:
+    app: my-app
+spec:
+  containers:
+  - name: my-container
+    image: nginx
+  tolerations:
+  # The values must be in double quotes
+  - key: "key1"
+    operator: "Equal" # Can be "Equal", "Exists", "NotEqual", "In", "NotIn"
+    value: "value1"
+    effect: "NoSchedule" # Can be "NoSchedule", "PreferNoSchedule", or "NoExecute"
