@@ -29,6 +29,7 @@
     - ```-o``` - output format, e.g. yaml, json, wide
     - ```--selector``` - filter by label selector, e.g. app=client
     - ```--sort-by``` - sort by a specific field, e.g. .status.containerStatuses[0].restartCount
+    - ```--no-headers``` - don't print headers, useful for scripting or troubleshooting, example ```kubectl get pods --no-headers --selector env=dev | wc -l```
 2. ```kubectl get all``` - lists all resources in the current namespace
 3. ```kubectl describe <resource> <resource name>``` - shows more information about the resource
 4. ```kubectl logs <pod name>``` - shows the logs of the pod

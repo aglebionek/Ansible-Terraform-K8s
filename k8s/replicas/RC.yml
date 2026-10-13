@@ -5,6 +5,9 @@ metadata:
   labels:
     app: myapp
     type: frontend
+  # These are key-value pairs similar to labels, but used for information for developers or tools, not for internal use by Kubernetes itself
+  annotations:
+    description: "This is a replication controller for myapp"
 spec:
   template:
     # This is basically a pod specification, but it is nested inside the replication controller spec
