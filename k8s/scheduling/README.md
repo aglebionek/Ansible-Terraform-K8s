@@ -16,7 +16,7 @@ spec:
 We can add labels to nodes that can be used to select nodes for scheduling pods.
 
 ```bash
-kubectl label nodes <node-name> <label-key>=<label-value>
+kubectl label node <node-name> <label-key>=<label-value>
 ```
 
 ## Node selectors
@@ -49,10 +49,10 @@ spec:
       requiredDuringSchedulingIgnoredDuringExecution:
         nodeSelectorTerms:
         - matchExpressions:
-          - key: <label-key> # Replace with the label key you want to match
-            operator: In # Can be In, NotIn, Exists, DoesNotExist, GreaterThan, or LessThan
+          - key: "<label-key>" # Replace with the label key you want to match
+            operator: "In" # Can be In, NotIn, Exists, DoesNotExist, GreaterThan, or LessThan
             values:
-            - <label-value> # Replace with the label value you want to match
+            - "<label-value>" # Replace with the label value you want to match
 ```
 
 ## Node affinity
