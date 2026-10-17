@@ -15,7 +15,20 @@ systemctl restart kubelet
 
 You can modify the kubelet configuration to specify a different directory for static pod manifests if needed.
 
+The configuration file is usually located at `/var/lib/kubelet/config.yaml`. You can change the `staticPodPath` field to point to a different directory.
+
 https://kubernetes.io/docs/tasks/configure-pod-container/static-pod/
 
 ## Use cases for static pods
 - **Critical system components**: Static pods are often used for running critical system components like the setting up the master node components (API server, controller manager, scheduler) in a Kubernetes cluster.
+
+## How to identify static pods
+
+### Question 1
+Identify static pods from the following pods.
+
+<img src="./images/question1.png" alt="question1_diagram" width="500"/>
+
+A simple check is to look at their names. Static pods end with the name of their node. In the image, all of the -controlplane pods are static pods because they end with the name of their node (e.g., `-controlplane`).
+
+Another option is to check `kubectl get pod <pod_name> -o yaml` and look at the `metadata.ownerReferences`.
