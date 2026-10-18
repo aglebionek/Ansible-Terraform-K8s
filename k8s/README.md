@@ -30,11 +30,19 @@
     - ```--selector``` - filter by label selector, e.g. app=client
     - ```--sort-by``` - sort by a specific field, e.g. .status.containerStatuses[0].restartCount
     - ```--no-headers``` - don't print headers, useful for scripting or troubleshooting, example ```kubectl get pods --no-headers --selector env=dev | wc -l```
+    - ```--custom-columns``` - specify custom columns to display. We can access the fields in the resource definition using JSONPath. For example, ```kubectl get pods --custom-columns=NAME:.metadata.name,PRIORITY_CLASS:.spec.priorityClassName```. So the convention follows ```<COLUMN_NAME>:<JSONPath>```.
 2. ```kubectl get all``` - lists all resources in the current namespace
 3. ```kubectl describe <resource> <resource name>``` - shows more information about the resource
 4. ```kubectl logs <pod name>``` - shows the logs of the pod
 
 ## Updating running resources
+- ```bash
+kubectl get pod <pod_name> -o yaml > pod.yaml
+# edit the pod.yaml file to make changes
+kubectl delete pod <pod_name>
+kubectl apply -f pod.yaml
+```
+
 - ```kubectl set image <resource_type>/<resource_name> <container_name>=<new_image>```
 - ```kubectl edit <resource_type>/<resource_name>``` - opens the resource definition in an editor, allowing you to modify it directly
 - ```kubectl scale <resource_type>/<resource_name> --replicas=<number_of_replicas>``` - scales the resource to the specified number of replicas
