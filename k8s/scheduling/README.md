@@ -62,3 +62,37 @@ requiredDuringScheduling - hard requirement, pod will not be scheduled if not me
 preferredDuringScheduling - soft requirement, pod wil
 
 Refer to documentation for more details on node affinity: https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#node-affinity
+
+## Multiple schedulers
+Kubernetes allows you to create your own schedulers.
+This allows for greater control over the scheduling process, specifying it to your needs.
+You can replace the default one, or have multiple schedulers running together.
+
+https://kubernetes.io/docs/tasks/extend-kubernetes/configure-multiple-schedulers/
+
+```yaml
+apiVersion: kubescheduler.config.k8s.io/v1
+kind: KubeSchedulerConfiguration
+profiles:
+  - schedulerName: my-scheduler 
+leaderElection:
+  leaderElect: true
+  resourceNamespace: kube-system
+  resourceName: lock-object-my-scheduler # lock-object-<scheduler-name>
+---
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: custom-scheduler-pod
+  namespace: kube-system
+spec:
+  containers:
+  - name: kube-scheduler
+    image: k8s.gcr.io/kube-scheduler:v1.20.0
+    command:
+    - kube-scheduler
+    - --address=127.0.0.1
+    - --config=/etc/kubernetes/scheduler-config.yaml
+    - --kubeconfig=/etc/kubernetes/scheduler.conf
+```
