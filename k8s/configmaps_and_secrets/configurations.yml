@@ -59,7 +59,8 @@ data:
 
 ---
 
-# You can remove this config from file after creating the secret, as it contains sensitive information. You can also setup correct permissions for the file/secret object modification/access.
+# You can remove this config from file after creating the secret, as it contains sensitive information. 
+# You can also setup correct permissions for the file/secret object modification/access.
 apiVersion: v1
 kind: Secret
 metadata:
