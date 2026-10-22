@@ -36,9 +36,9 @@
 4. ```kubectl logs <pod name>``` - shows the logs of the pod
 
 ## Updating running resources
-- ```bash
+edit the pod.yaml file to make changes
+```bash
 kubectl get pod <pod_name> -o yaml > pod.yaml
-# edit the pod.yaml file to make changes
 kubectl delete pod <pod_name>
 kubectl apply -f pod.yaml
 ```
@@ -64,3 +64,9 @@ By default the namespace is named 'default'
 - ```kubectl get <resource> --all-namespaces|-A``` - lists resources in all namespaces
 - ```kubectl delete namespace <namespace_name>``` - deletes the specified namespace and all resources in it
 - ```kubectl config set-context --current --namespace=<namespace_name>``` - switch the currently active namespace to the specified namespace
+
+## Dockerfile to k8s (CMD, entrypoint)
+|Dockerfile|Kubernetes|Example|
+|---|---|---|
+|ENTRYPOINT|command|["sleep"]|
+|CMD|args|["5"]|
