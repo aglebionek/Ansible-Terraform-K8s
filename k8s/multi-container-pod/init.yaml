@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: init-pod
+spec:
+  containers:
+    - name: webapp
+      image: webapp
+      ports:
+        - containerPort: 80
+  initContainers:
+    - name: db-check
+      image: busybox
+      command: ['bash', 'wait-for-container.sh']
