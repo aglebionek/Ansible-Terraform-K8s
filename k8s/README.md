@@ -34,6 +34,7 @@
 2. ```kubectl get all``` - lists all resources in the current namespace
 3. ```kubectl describe <resource> <resource name>``` - shows more information about the resource
 4. ```kubectl logs <pod name>``` - shows the logs of the pod
+5. ```crictl pods``` - lists all the pods in the node, useful for troubleshooting when kubectl is not working
 
 ## Updating running resources
 edit the pod.yaml file to make changes
