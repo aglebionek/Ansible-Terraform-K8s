@@ -1,0 +1,21 @@
+apiVersion: admissionregistration.k8s.io/v1
+kind: ValidatingWebhookConfiguration
+metadata:
+  name: validating-webhook-example
+webhooks:
+  - name: initial-validation-webhook
+    clientConfig:
+      # Outside public URL
+      url: "https://validating-webhook-service.default.svc:443/validate"
+      # OR
+      # For in-cluster service, use the service reference instead of URL
+      service:
+        name: validating-webhook-service
+        namespace: webhook-namespace
+      caBundle: <base64-encoded-ca-cert>
+    rules:
+      - operations: [] # Valid are CREATE, UPDATE, DELETE, CONNECT
+        scope: "Namespaced" # Valid are "Namespaced", "Cluster", "*"
+        resources: ["deployments"]
+        apiGroups: ["apps"] 
+        apiVersions: ["v1"]

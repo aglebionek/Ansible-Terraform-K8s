@@ -16,8 +16,8 @@ kubectl create configmap <configmap_name> --from-file=<file_path>
 ## Imperative
 
 ```bash
-kubectl create secret generic <secret_name> --from-literal=<key>=<value>
-kubectl create secret generic <secret_name> --from-file=<file_path>
+kubectl create secret <secret_type> <secret_name> --from-literal=<key>=<value>
+kubectl create secret <secret_type> <secret_name> --from-file=<file_path>
 ```
 
 ## Declarative
