@@ -1,0 +1,44 @@
+apiVersion: "autoscaling.k8s.io/v1"
+kind: VerticalPodAutoscaler
+metadata:
+  name: flask-app
+spec:
+  targetRef:
+    apiVersion: "apps/v1"
+    kind: Deployment
+    name: flask-app-4
+  updatePolicy:
+    updateMode: "Off"  # Can be "Off", "Initial", "Recreate" or "Auto"
+  resourcePolicy:
+    containerPolicies:
+      - containerName: '*'
+        minAllowed:
+          cpu: 100m
+        maxAllowed:
+          cpu: 1000m
+        controlledResources: ["cpu"]
+
+--- 
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: flask-app-4
+  labels:
+    app: flask-app-4
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: flask-app-4
+  template:
+    metadata:
+      labels:
+        app: flask-app-4
+    spec:
+      containers:
+      - name: flask-app-4
+        image:  kodekloud/flask-session-app:1 
+        ports:
+        - name: http
+          containerPort: 8080
