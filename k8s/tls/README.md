@@ -51,3 +51,22 @@ It can show you the certificate's subject, issuer, validity period, and other in
 ```bash
 openssl x509 -in <certificate_file> -text -noout
 ```
+
+# Signing certificates for other users (admins)
+As a Kubernetes administrator, you can sign certificates for other users (admins) to allow them to access the cluster securely.
+You can do it either by connecting to the master node and running the `openssl` commands manually, or by using a certificate signing request object in Kubernetes.
+
+## Certificate Signing Request (CSR) workflow in Kubernetes
+Kubernetes has a built-in CSR API that allows users to request certificates from the cluster's CA. 
+These operations are handled by the `kube-controller-manager` component, which is responsible for signing the CSRs and issuing the certificates.
+
+The CSR workflow involves the following steps:
+1. The user generates a private key and a key CSR.
+2. The user creates a CSR K8S object or asks an administrator to create it. [Example CSR object](./CSR.yaml)
+3. An administrator can view the requests and approve or deny them using the `kubectl` command.
+```bash
+kubectl get csr
+kubectl describe csr <csr_name>
+kubectl certificate approve <csr_name>
+kubectl certificate deny <csr_name>
+```
