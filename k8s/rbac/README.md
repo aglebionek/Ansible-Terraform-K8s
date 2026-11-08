@@ -7,7 +7,7 @@
 <img src="rbac.png" alt="RBAC Diagram" style="width:600px;"/>
 
 - **Role** and **ClusterRole** are K8s Objects that define a set of permissions.
-- **Role** is namespace-scoped, while **ClusterRole** is cluster-scoped.
+- **Role** is namespace-scoped (for namespace-scoped resources, like pods), while **ClusterRole** is cluster-scoped (for cluster-scoped resources, like nodes. However, you can also use ClusterRoles to grant access to namespace-scoped resources across all namespaces).
 
 - **RoleBinding** Objects connect Roles to users.
 - **ClusterRoleBinding** Objects connect ClusterRoles to users.
@@ -26,6 +26,7 @@ rules:
 - apiGroups: [""] # "" indicates the core API group
   resources: ["pods"]
   verbs: ["get", "watch", "list"]
+  resourceNames: ["pod1", "pod2"] # optional, specify specific resources
 ```
 
 - RoleBinding Example:
@@ -39,7 +40,7 @@ metadata:
   namespace: default
 subjects:
 # You can specify more than one "subject"
-- kind: User
+- kind: User # Can be "User", "Group", or "ServiceAccount"
   name: jane # "name" is case sensitive
   apiGroup: rbac.authorization.k8s.io
 roleRef:
@@ -89,6 +90,21 @@ and verify under users that the new user has been added.
 kubectl config set-context username-context --cluster=clustername --namespace=default --user=username
 ```
 You might want to create a new namespace for the user instead of using the default one.
+
+
+## Viewing and testing permissions
+- Use the `kubectl auth can-i` command to check if a user has permission to perform a specific action on a resource.
+- Example:
+```bash
+kubectl auth can-i get pods --as=username
+```
+
+## View existing Roles and RoleBindings
+- To view existing Roles and RoleBindings in a namespace:
+```bash
+kubectl get roles,rolebindings -n <namespace>
+kubectl describe role <role-name> -n <namespace>
+```
 
 
 
