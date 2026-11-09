@@ -48,6 +48,7 @@ kubectl apply -f pod.yaml
 - ```kubectl edit <resource_type>/<resource_name>``` - opens the resource definition in an editor, allowing you to modify it directly
 - ```kubectl scale <resource_type>/<resource_name> --replicas=<number_of_replicas>``` - scales the resource to the specified number of replicas
 - ```kubectl replace [--force] -f <file>``` - replaces the resource with the definition in the specified file
+- ```kubectl patch <resource_type>/<resource_name> -p '{"spec":{"replicas":<number_of_replicas>}}'``` - patches the resource with the specified number of replicas
 
 ## Accessing containers inside a node
 - ```kubectl exec -it <container_name> -- sh``` - opens a shell inside the container, same as docker exec.
