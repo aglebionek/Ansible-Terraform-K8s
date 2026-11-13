@@ -11,6 +11,10 @@
 - tool to run a single-node K8s cluster locally
 - suitable for development/testing
 
+## kubectx and kubens
+- kubectx: switch between contexts (clusters) easily
+- kubens: switch between namespaces easily
+
 ## Helm
 - package manager for K8s
 - can convert objects into reusable templates
